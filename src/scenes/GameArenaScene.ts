@@ -33,6 +33,9 @@ export class GameArenaScene extends Phaser.Scene {
         // Reset threat system for new game
         threatMgr.reset();
 
+        // Reset wave timer
+        this.waveTimer = 30;
+
         // 1. Setup World
         this.physics.world.setBounds(0, 0, width, height);
 

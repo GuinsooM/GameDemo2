@@ -33,8 +33,9 @@ export class Companion extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
 
     // Use base texture from factory
-    this.setTexture('companion_base');
-    this.setScale(3);
+    this.setTexture('companion');
+    this.play('companion_idle');
+    // this.setScale(3);
 
     // Color code based on Unit Type (rudimentary support)
     if (template.tags.includes('Mage')) {

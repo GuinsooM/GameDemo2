@@ -13,6 +13,7 @@ export class ShopScene extends Phaser.Scene {
   }
 
   create() {
+    this.shopSlots = [];
     const { width, height } = this.scale;
     const gm = GameManager.getInstance();
 
