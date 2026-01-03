@@ -50,7 +50,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     const textureKey = `enemy_${type}`;
     this.setTexture(textureKey);
-    this.setScale(3);
+    // this.setScale(3); // Textures are already scaled up by 4 in asset generation
+    this.setScale(1); // Reset scale to 1
+
+    // Play move animation
+    this.play(`enemy_${type}_move`);
 
     // Initialize flanker angle
     if (type === 'flanker') {
@@ -96,6 +100,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   // Basic: Direct chase with slight acceleration
   private moveBasic(commanderX: number, commanderY: number) {
     this.scene.physics.moveTo(this, commanderX, commanderY, this.speed);
+
+    // Flip based on direction
+    this.setFlipX(this.body!.velocity.x < 0);
   }
 
   // Fast: Quick with occasional dashes

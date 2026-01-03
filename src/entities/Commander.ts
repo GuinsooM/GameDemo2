@@ -8,9 +8,14 @@ export class Commander extends Phaser.Physics.Arcade.Sprite {
   public maxHp: number = 300;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, 'commander_texture');
+    super(scene, x, y, 'commander');
     scene.add.existing(this);
     scene.physics.add.existing(this);
+
+    // Scale is baked into the texture (4x), but let's make sure it's good size
+    // Texture 36x48 (which is 9x12 * 4).
+
+    this.play('commander_idle');
 
     this.setCollideWorldBounds(true);
 
@@ -40,6 +45,18 @@ export class Commander extends Phaser.Physics.Arcade.Sprite {
     else if (down.isDown) velocityY = this.speed;
 
     this.setVelocity(velocityX, velocityY);
+
+    // Animation control
+    if (velocityX !== 0 || velocityY !== 0) {
+      if (this.anims.currentAnim?.key !== 'commander_run') {
+        this.play('commander_run');
+      }
+      this.setFlipX(velocityX < 0);
+    } else {
+      if (this.anims.currentAnim?.key !== 'commander_idle') {
+        this.play('commander_idle');
+      }
+    }
   }
 
   public takeDamage(amount: number) {
